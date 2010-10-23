@@ -28,13 +28,6 @@ module Choices
   end
 end
 
-if defined? Rails::Application::Configuration
-  Rails::Application::Configuration.class_eval do
-    def from_file(name)
-      file = self.root + 'config' + name
-      Choices.load_settings(file, Rails.env.to_s).each do |key, value|
-        self.send("#{key}=", value)
-      end
-    end
-  end
+if defined? Rails
+  require 'choices/rails'
 end
