@@ -1,7 +1,7 @@
 # -*- encoding: utf-8 -*-
 
 Gem::Specification.new do |gem|
-  gem.name    = 'choice'
+  gem.name    = 'choices'
   gem.version = '0.1.0'
   gem.date    = Date.today.to_s
 
@@ -13,7 +13,7 @@ Gem::Specification.new do |gem|
 
   gem.authors  = ['Mislav Marohnić']
   gem.email    = 'mislav.marohnic@gmail.com'
-  gem.homepage = 'http://github.com/mislav/choice'
+  gem.homepage = 'http://github.com/mislav/choices'
 
   gem.rubyforge_project = nil
   gem.has_rdoc = false

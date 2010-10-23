@@ -1,7 +1,7 @@
 require 'hashie/mash'
 require 'erb'
 
-module Choice
+module Choices
   extend self
   
   def load_settings(filename, env)
@@ -32,7 +32,7 @@ if defined? Rails::Application::Configuration
   Rails::Application::Configuration.class_eval do
     def from_file(name)
       file = self.root + 'config' + name
-      Choice.load_settings(file, Rails.env.to_s).each do |key, value|
+      Choices.load_settings(file, Rails.env.to_s).each do |key, value|
         self.send("#{key}=", value)
       end
     end

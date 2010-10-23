@@ -3,6 +3,9 @@ The choice is yours
 
 Easy-peasy external settings for your Rails app.
 
+    # Gemfile
+    gem 'choices'
+
 In your app initializer block:
 
     config.from_file 'settings.yml'
