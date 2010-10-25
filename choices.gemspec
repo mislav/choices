@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name    = 'choices'
-  gem.version = '0.1.0'
+  gem.version = '0.2.0'
   gem.date    = Date.today.to_s
 
   gem.add_dependency 'hashie', '>= 0.4.0'
