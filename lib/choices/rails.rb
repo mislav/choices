@@ -17,7 +17,7 @@ module Choices::Rails
     root = self.respond_to?(:root) ? self.root : Rails.root
     file = root + 'config' + name
     
-    settings = Choices.load_settings(file, RAILS_ENV)
+    settings = Choices.load_settings(file, Rails.env)
     @choices.update settings
     
     settings.each do |key, value|
