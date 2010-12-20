@@ -29,6 +29,10 @@ module Choices::Rails
     super or method.to_s =~ /=$/ or (method.to_s =~ /\?$/ and @choices.key?($`))
   end
 
+  def[](key)
+    @choices[key] || super.send(key)
+  end
+
   private
 
     def method_missing(method, *args, &block)
