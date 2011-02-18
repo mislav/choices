@@ -2,8 +2,8 @@
 
 Gem::Specification.new do |gem|
   gem.name    = 'choices'
-  gem.version = '0.2.0'
-  gem.date    = Date.today.to_s
+  gem.version = '0.2.1'
+  gem.date    = Time.now.strftime('%Y-%m-%d')
 
   gem.add_dependency 'hashie', '>= 0.4.0'
   # gem.add_development_dependency 'rspec', '~> 1.2.9'
