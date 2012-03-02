@@ -9,6 +9,10 @@ Easy-peasy external settings for your Rails app.
 In your app initializer block:
 
     config.from_file 'settings.yml'
+    
+    #to scope out your settings
+    # Rails.configuration.my_engine...
+    config.from_file 'settings.yml', "my_engine"
 
 This will read configuration from "config/settings.yml" and, additionally, "settings.local.yml" if it exists. You should check the main file into version control, but not the ".local" file which is to be used for per-machine configuration: tweaks in development or private keys in production, for example.
 

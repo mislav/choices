@@ -13,13 +13,18 @@ module Choices::Rails
     end
   end
   
-  def from_file(name)
+  def from_file(name, scope=nil )
     root = self.respond_to?(:root) ? self.root : Rails.root
     file = root + 'config' + name
     
     settings = Choices.load_settings(file, Rails.respond_to?(:env) ? Rails.env : RAILS_ENV)
+    if scope
+      scoped_settings = Hashie::Mash.new
+      scoped_settings.send("#{scope}=", settings)
+      settings = scoped_settings
+    end
     @choices.update settings
-    
+
     settings.each do |key, value|
       self.send("#{key}=", value)
     end
