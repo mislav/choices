@@ -16,7 +16,6 @@ Gem::Specification.new do |gem|
   gem.homepage = 'http://github.com/mislav/choices'
 
   gem.rubyforge_project = nil
-  gem.has_rdoc = false
 
   gem.files = Dir['Rakefile', '{bin,lib,man,test,spec}/**/*', 'README*', 'LICENSE*']
   # gem.files &= `git ls-files -z`.split("\0")
