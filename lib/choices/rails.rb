@@ -24,6 +24,26 @@ module Choices::Rails
       self.send("#{key}=", value)
     end
   end
+
+  def respond_to?(method)
+    super or method.to_s =~ /=$/ or (method.to_s =~ /\?$/ and @choices.key?($`))
+  end
+
+  def[](key)
+    @choices[key] || super.send(key)
+  end
+
+  private
+
+    def method_missing(method, *args, &block)
+      if method.to_s =~ /=$/ or method.to_s =~ /\?$/
+        @choices.send(method, *args)
+      elsif @choices.key?(method)
+        @choices[method]
+      else
+        super
+      end
+    end
 end
 
 if defined? Rails::Application::Configuration
@@ -31,22 +51,5 @@ if defined? Rails::Application::Configuration
 elsif defined? Rails::Configuration
   Rails::Configuration.class_eval do
     include Choices::Rails
-    include Module.new {
-      def respond_to?(method)
-        super or method.to_s =~ /=$/ or (method.to_s =~ /\?$/ and @choices.key?($`))
-      end
-      
-      private
-      
-      def method_missing(method, *args, &block)
-        if method.to_s =~ /=$/ or (method.to_s =~ /\?$/ and @choices.key?($`))
-          @choices.send(method, *args)
-        elsif @choices.key?(method)
-          @choices[method]
-        else
-          super
-        end
-      end
-    }
   end
 end
