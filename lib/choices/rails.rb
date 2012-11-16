@@ -21,6 +21,12 @@ module Choices::Rails
     @choices.update settings
     
     settings.each do |key, value|
+      old_value = self.respond_to?(key) ? self.send(key) : nil
+
+      if old_value && old_value.is_a?(Hash) && value.is_a?(Hash)
+        value = Hashie::Mash.new(old_value).update value
+      end
+
       self.send("#{key}=", value)
     end
   end
