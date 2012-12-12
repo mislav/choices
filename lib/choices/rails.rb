@@ -1,3 +1,4 @@
+require 'hashie/mash'
 require 'choices'
 
 module Choices::Rails
@@ -23,7 +24,13 @@ module Choices::Rails
     settings.each do |key, value|
       old_value = self.respond_to?(key) ? self.send(key) : nil
 
-      if old_value && old_value.is_a?(Hash) && value.is_a?(Hash)
+      if "Rails::OrderedOptions" == old_value.class.name
+        # convert from Array to a real Hash
+        old_value = old_value.inject({}) {|h,(k,v)| h[k]=v; h }
+      end
+
+      if Hash === value and Hash === old_value
+        # don't overwrite existing Hash values; deep update them
         value = Hashie::Mash.new(old_value).update value
       end
 
