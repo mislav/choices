@@ -14,5 +14,5 @@ Gem::Specification.new do |gem|
   gem.email    = 'mislav.marohnic@gmail.com'
   gem.homepage = 'https://github.com/mislav/choices'
 
-  gem.files = Dir['Rakefile', '{bin,lib,man,test,spec}/**/*', 'README*', 'LICENSE*']
+  gem.files = Dir['Rakefile', '{bin,lib,man,test,spec}/**/*', 'README*', '*LICENSE*']
 end
