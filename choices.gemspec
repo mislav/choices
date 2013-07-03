@@ -2,7 +2,7 @@
 
 Gem::Specification.new do |gem|
   gem.name    = 'choices'
-  gem.version = '0.3.1'
+  gem.version = '0.3.2'
 
   gem.add_dependency 'hashie', '>= 0.4.0'
   # gem.add_development_dependency 'rspec', '~> 1.2.9'
