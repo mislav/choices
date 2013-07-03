@@ -28,7 +28,7 @@ module Choices
   end
   
   def yaml_load(content)
-    if defined? YAML::ENGINE
+    if defined?(YAML::ENGINE) && defined?(Syck)
       # avoid using broken Psych in 1.9.2
       old_yamler = YAML::ENGINE.yamler
       YAML::ENGINE.yamler = 'syck'
@@ -36,7 +36,7 @@ module Choices
     begin
       YAML::load(content)
     ensure
-      YAML::ENGINE.yamler = old_yamler if defined? YAML::ENGINE
+      YAML::ENGINE.yamler = old_yamler if defined?(YAML::ENGINE) && defined?(Syck)
     end
   end
 end
