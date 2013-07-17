@@ -16,7 +16,11 @@ module Choices
   
   def load_settings_hash(filename, env)
     yaml_content = ERB.new(IO.read(filename)).result
-    yaml_load(yaml_content)[env]
+    choices = yaml_load(yaml_content)
+    unless choices.has_key? env
+      raise EnvironmentMissingError, "You are missing environment (#{env}) in #{filename}."
+    end
+    choices[env]
   end
   
   def with_local_settings(filename, env, suffix)
@@ -39,6 +43,8 @@ module Choices
       YAML::ENGINE.yamler = old_yamler if defined?(YAML::ENGINE) && defined?(Syck)
     end
   end
+
+  class EnvironmentMissingError < StandardError; end;
 end
 
 if defined? Rails
