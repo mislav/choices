@@ -5,28 +5,27 @@ module Choices
   extend self
   
   def load_settings(filename, env)
-    mash = Hashie::Mash.new(load_settings_hash(filename, env))
+    mash = Hashie::Mash.new(load_settings_hash(filename))
     
-    with_local_settings(filename, env, '.local') do |local|
+    with_local_settings(filename, '.local') do |local|
       mash.update local
     end
     
-    return mash
-  end
-  
-  def load_settings_hash(filename, env)
-    yaml_content = ERB.new(IO.read(filename)).result
-    choices = yaml_load(yaml_content)
-    unless choices.has_key? env
+    unless mash.has_key? env
       raise EnvironmentMissingError, "You are missing environment (#{env}) in #{filename}."
     end
-    choices[env]
+    return mash[env]
+  end
+
+  def load_settings_hash(filename)
+    yaml_content = ERB.new(IO.read(filename)).result
+    yaml_load(yaml_content)
   end
   
-  def with_local_settings(filename, env, suffix)
+  def with_local_settings(filename, suffix)
     local_filename = filename.sub(/(\.\w+)?$/, "#{suffix}\\1")
     if File.exists? local_filename
-      hash = load_settings_hash(local_filename, env)
+      hash = load_settings_hash(local_filename)
       yield hash if hash
     end
   end
