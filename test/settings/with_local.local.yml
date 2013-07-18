@@ -1,0 +1,5 @@
+development:
+  name: 'Development'
+
+production:
+  name: 'Production local'
