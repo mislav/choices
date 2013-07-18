@@ -11,11 +11,10 @@ module Choices
     with_local_settings(filename, '.local') do |local|
       mash.update local
     end
-    
-    unless mash.has_key? env
-      raise EnvironmentMissingError, "You are missing environment (#{env}) in #{filename}."
+
+    mash.fetch(env) do
+      raise IndexError, %{Missing key for "#{env}" in `#{filename}'}
     end
-    return mash[env]
   end
 
   def load_settings_hash(filename)
@@ -43,8 +42,6 @@ module Choices
       YAML::ENGINE.yamler = old_yamler if defined?(YAML::ENGINE) && defined?(Syck)
     end
   end
-
-  class EnvironmentMissingError < StandardError; end;
 end
 
 if defined? Rails

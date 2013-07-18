@@ -23,9 +23,10 @@ describe Choices do
     end
 
     it 'should raise an exception if the environment does not exist' do
-      lambda do
-        Choices.load_settings(@with_local, 'inexistant')
-      end.must_raise Choices::EnvironmentMissingError
+      error = lambda {
+        Choices.load_settings(@with_local, 'nonexistent')
+      }.must_raise(IndexError)
+      error.message.must_equal %{Missing key for "nonexistent" in `#{@with_local}'}
     end
   end
 end
