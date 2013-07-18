@@ -1,0 +1,6 @@
+defaults: &defaults
+  name: 'Defaults'
+
+production:
+  <<: *defaults
+

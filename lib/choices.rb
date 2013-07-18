@@ -1,5 +1,6 @@
 require 'hashie/mash'
 require 'erb'
+require 'yaml'
 
 module Choices
   extend self

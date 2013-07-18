@@ -5,7 +5,7 @@ Gem::Specification.new do |gem|
   gem.version = '0.3.2'
 
   gem.add_dependency 'hashie', '>= 0.4.0'
-  # gem.add_development_dependency 'rspec', '~> 1.2.9'
+  gem.add_development_dependency 'minitest', '~> 5.0.6'
 
   gem.summary = "Easy settings for your app"
   # gem.description = "Longer description."
@@ -16,4 +16,5 @@ Gem::Specification.new do |gem|
   gem.license  = 'MIT'
 
   gem.files = Dir['Rakefile', '{bin,lib,man,test,spec}/**/*', 'README*', '*LICENSE*']
+  gem.test_files = Dir.glob('test/test_*.rb')
 end
