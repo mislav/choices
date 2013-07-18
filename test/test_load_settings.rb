@@ -21,5 +21,11 @@ describe Choices do
       Choices.load_settings(@with_local, 'development').name.must_equal 'Development'
       Choices.load_settings(@with_local, 'production').name.must_equal 'Production local'
     end
+
+    it 'should raise an exception if the environment does not exist' do
+      lambda do
+        Choices.load_settings(@with_local, 'inexistant')
+      end.must_raise Choices::EnvironmentMissingError
+    end
   end
 end
