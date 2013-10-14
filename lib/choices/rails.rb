@@ -39,8 +39,8 @@ module Choices::Rails
   end
 end
 
-if defined? Rails::Application::Configuration
-  Rails::Application::Configuration.send(:include, Choices::Rails)
+if defined? Rails::Engine::Configuration
+  Rails::Engine::Configuration.send(:include, Choices::Rails)
 elsif defined? Rails::Configuration
   Rails::Configuration.class_eval do
     include Choices::Rails
