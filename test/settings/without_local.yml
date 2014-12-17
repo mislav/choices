@@ -1,5 +1,8 @@
 defaults: &defaults
   name: 'Defaults'
+  mailer:
+    host: 'localhost'
+  email: '%{name}@%{mailer.host}'
 
 development:
   name: 'Development'
@@ -7,7 +10,13 @@ development:
 production:
   <<: *defaults
   name: 'Production'
+  mailer:
+    host: 'production.com'
 
 test:
+  <<: *defaults
   name: 'Test'
 
+index_error:
+  name: 'Defaults'
+  email: '%{nonexistent.key}'

@@ -3,3 +3,5 @@ development:
 
 production:
   name: 'Production local'
+  mailer:
+    host: 'production.local'

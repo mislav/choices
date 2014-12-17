@@ -22,6 +22,26 @@ describe Choices do
       Choices.load_settings(@with_local, 'production').name.must_equal 'Production local'
     end
 
+    describe 'variables substitution' do
+      it 'should substitute variables' do
+        Choices.load_settings(@without_local, 'defaults').email.must_equal 'Defaults@localhost'
+        Choices.load_settings(@without_local, 'test').email.must_equal 'Test@localhost'
+        Choices.load_settings(@without_local, 'production').email.must_equal 'Production@production.com'
+      end
+
+      it 'should substitute from local settings too' do
+        Choices.load_settings(@with_local, 'defaults').email.must_equal 'Defaults@localhost'
+        Choices.load_settings(@with_local, 'production').email.must_equal 'Production local@production.local'
+      end
+
+      it 'should raise an exception when substitution key does not exist' do
+        error = lambda {
+          Choices.load_settings(@without_local, 'index_error')
+        }.must_raise(IndexError)
+        error.message.must_equal %{Missing key for "%{nonexistent.key}" in `#{@without_local}'}
+      end
+    end
+
     it 'should raise an exception if the environment does not exist' do
       error = lambda {
         Choices.load_settings(@with_local, 'nonexistent')

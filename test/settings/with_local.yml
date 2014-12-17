@@ -1,6 +1,11 @@
 defaults: &defaults
   name: 'Defaults'
+  mailer:
+   host: 'localhost'
+  email: '%{name}@%{mailer.host}'
 
 production:
   <<: *defaults
+  mailer:
+    host: 'production.com'
 

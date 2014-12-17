@@ -12,9 +12,11 @@ module Choices
       mash.update local
     end
 
-    mash.fetch(env) do
+    env_mash = mash.fetch(env) do
       raise IndexError, %{Missing key for "#{env}" in `#{filename}'}
     end
+
+    substitute_variables(env_mash, filename)
   end
 
   def load_settings_hash(filename)
@@ -27,6 +29,21 @@ module Choices
     if File.exists? local_filename
       hash = load_settings_hash(local_filename)
       yield hash if hash
+    end
+  end
+
+  def substitute_variables(mash, filename)
+    mash.deep_update(mash) do |_, value|
+      if value.respond_to?(:gsub!)
+        value.gsub!(/%\{(.+?)\}/) do |parameter|
+          $1.split('.').inject(mash) do |result, key|
+            raise IndexError, %{Missing key for "#{parameter}" in `#{filename}'} unless result.respond_to? :[]
+            result[key]
+          end
+        end
+      end
+
+      value
     end
   end
   
