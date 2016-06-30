@@ -10,8 +10,19 @@ gem 'choices'
 
 In your app initializer block:
 
+~~~rb
+config.from_hash {key: 'value', ...}
+
+~~~
+
+This will dynamically load the given Hash into your Rails.configuration
+and can be accessed using Rails.configuration.key => 'value'
+
+Or
+
 ~~~ rb
 config.from_file 'settings.yml'
+
 ~~~
 
 This will read configuration from "config/settings.yml" and, additionally,
