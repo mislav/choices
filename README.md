@@ -16,9 +16,19 @@ config.from_hash {key: 'value', ...}
 ~~~
 
 This will dynamically load the given Hash into your Rails.configuration
-and can be accessed using Rails.configuration.key => 'value'
+and can be accessed using Rails.configuration.key => 'value'. Given Hash can be nested to any levels, but, you should be able to retrieve value using "." notaton.
+
+~~~
+Example:
+  config.from_hash {key: {key: {key: 'value'}}}
+  can be accessed using Rails.configuration.key.key.key => 'value'
+~~~
+
+This method is very useful when you want to store values of settings.yml in a store and retrieve these values during bootup and make them available to your Rails stack through Rails.configuration.
+
 
 Or
+
 
 ~~~ rb
 config.from_file 'settings.yml'
