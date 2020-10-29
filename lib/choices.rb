@@ -20,8 +20,10 @@ module Choices
   def load_settings_from_files(filenames, env)
     mash = Hashie::Mash.new()
     filenames.each do |file_name|
-      a = load_settings(file_name, env)
-      mash.update(a)
+      if File.exist? file_name
+        a = load_settings(file_name, env)
+        mash.update(a)
+      end
     end
     mash
   end
