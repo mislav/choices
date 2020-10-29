@@ -44,6 +44,24 @@ configuration: tweaks in development or private keys in production, for example.
 config/settings.local.yml
 ~~~
 
+#####Or
+
+
+~~~ rb
+config.from_files [Pathname.new("settings.yml"), Pathname.new("settings.patch.yml")]
+
+~~~
+
+This will read configuration from "config/settings.yml" and, additionally,
+"settings.local.yml" if it exists, and merges values from settings.patch.yml. If you want to maintain a default settings in the application and want to inject any additional settings you can add them in settings.patch.yml. You should check the main file into version
+control, but not the ".patch" file which is to be used for per-machine
+configuration: tweaks in development or private keys in production, for example.
+
+~~~
+# .gitignore
+config/settings.patch.yml
+~~~
+
 Configuration files can contain ERB; this is useful for reading in dynamic
 config such as from environment variables:
 
