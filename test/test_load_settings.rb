@@ -10,6 +10,9 @@ describe Choices do
     path = Pathname.new(__FILE__)
     @without_local = path + '../settings/without_local.yml'
     @with_local = path + '../settings/with_local.yml'
+    @settings = path + '../settings/settings.yml'
+    @with_patch_without_local = path + '../settings/with_patch_without_local.yml'
+    @with_patch_with_local = path + '../settings/patch.yml'
   end
 
   describe 'when loading from Hash' do
@@ -47,6 +50,19 @@ describe Choices do
         Choices.load_settings(@with_local, 'nonexistent')
       }.must_raise(IndexError)
       error.message.must_equal %{Missing key for "nonexistent" in `#{@with_local}'}
+    end
+  end
+
+  describe 'when loading a settings file along with a patch file' do
+    it 'should return a mash for the specified environment' do
+      Choices.load_settings_from_files([@settings, @with_patch_without_local], 'defaults').name.must_equal 'Defaults'
+      Choices.load_settings_from_files([@settings, @with_patch_without_local], 'production').name.must_equal 'Production with patch'
+    end
+
+    it 'should load the patched settings' do
+      Choices.load_settings_from_files([@settings, @with_patch_with_local], 'defaults').name.must_equal 'Defaults'
+      Choices.load_settings_from_files([@without_local, @with_patch_with_local], 'production').name.must_equal 'Production name updated'
+      Choices.load_settings_from_files([@without_local, @with_patch_with_local], 'production').description.must_equal 'Production Patch description updated'
     end
   end
 end

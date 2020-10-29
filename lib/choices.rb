@@ -17,6 +17,15 @@ module Choices
     end
   end
 
+  def load_settings_from_files(filenames, env)
+    mash = Hashie::Mash.new()
+    filenames.each do |file_name|
+      a = load_settings(file_name, env)
+      mash.update(a)
+    end
+    mash
+  end
+
   def load_settings_hash(filename)
     yaml_content = ERB.new(IO.read(filename)).result
     yaml_load(yaml_content)

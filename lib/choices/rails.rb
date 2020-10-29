@@ -35,6 +35,23 @@ module Choices::Rails
     dynamically_load_settings(settings)
   end
 
+  def from_files(names, env=nil)
+    files = []
+    names.each do |name|
+      if name.relative?
+        root = self.respond_to?(:root) ? self.root : Rails.root
+        files << root + 'config' + name
+      else
+        files << name
+      end
+    end
+
+    env = Rails.respond_to?(:env) ? Rails.env : RAILS_ENV if env.nil?
+
+    settings = Choices.load_settings_from_files(files, env)
+    dynamically_load_settings(settings)
+  end
+
   def dynamically_load_settings(settings)
     @choices.update settings
 
