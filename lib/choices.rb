@@ -17,6 +17,27 @@ module Choices
     end
   end
 
+  def load_settings_from_files(filenames, env)
+    mash = Hashie::Mash.new()
+
+    # always load default settings first
+    mash.update(load_settings(filenames.shift, env))
+
+    # override default settings with patch settings, if they exist
+    filenames.each do |file_name|
+      if File.exist? file_name
+        begin
+          mash.update(load_settings(file_name, env))
+        rescue IndexError => ex
+          puts("#{env} configs does not exist in the patch file; falling back to default configs.")
+        end
+      else
+        puts("Skipping file #{file_name}, file not found")
+      end
+    end
+    mash
+  end
+
   def load_settings_hash(filename)
     yaml_content = ERB.new(IO.read(filename)).result
     yaml_load(yaml_content)

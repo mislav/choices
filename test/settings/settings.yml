@@ -1,0 +1,13 @@
+defaults: &defaults
+  name: 'Defaults'
+
+development:
+  name: 'Development'
+
+production:
+  <<: *defaults
+  name: 'Production'
+
+test:
+  name: 'Test'
+

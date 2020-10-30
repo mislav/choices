@@ -1,0 +1,13 @@
+defaults: &defaults
+  name: 'Defaults'
+
+development:
+  <<: *defaults
+  name: 'Development Patch'
+  description: 'Development patch description updated'
+
+production:
+  <<: *defaults
+  name: 'Production name updated'
+  description: 'Production Patch description updated'
+

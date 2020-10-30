@@ -1,0 +1,7 @@
+defaults: &defaults
+  name: 'Defaults'
+
+production:
+  <<: *defaults
+  name: 'Production with patch'
+
