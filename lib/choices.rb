@@ -19,10 +19,12 @@ module Choices
 
   def load_settings_from_files(filenames, env)
     mash = Hashie::Mash.new()
+    mash.update(load_settings(filenames.shift, env))
     filenames.each do |file_name|
       if File.exist? file_name
-        a = load_settings(file_name, env)
-        mash.update(a)
+        mash.update(load_settings(file_name, env)) rescue IndexError
+      else
+        puts("Skipping file #{file_name}, file not found")
       end
     end
     mash

@@ -13,6 +13,7 @@ describe Choices do
     @settings = path + '../settings/settings.yml'
     @with_patch_without_local = path + '../settings/with_patch_without_local.yml'
     @with_patch_with_local = path + '../settings/patch.yml'
+    @non_existent_file = path + '../settings/non_existent.yml'
   end
 
   describe 'when loading from Hash' do
@@ -61,6 +62,7 @@ describe Choices do
 
     it 'should load the patched settings' do
       Choices.load_settings_from_files([@settings, @with_patch_with_local], 'defaults').name.must_equal 'Defaults'
+      Choices.load_settings_from_files([@settings, @with_patch_with_local, @non_existent_file], 'defaults').name.must_equal 'Defaults'
       Choices.load_settings_from_files([@without_local, @with_patch_with_local], 'production').name.must_equal 'Production name updated'
       Choices.load_settings_from_files([@without_local, @with_patch_with_local], 'production').description.must_equal 'Production Patch description updated'
     end
