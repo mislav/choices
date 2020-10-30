@@ -19,7 +19,11 @@ module Choices
 
   def load_settings_from_files(filenames, env)
     mash = Hashie::Mash.new()
+
+    # always load default settings first
     mash.update(load_settings(filenames.shift, env))
+
+    # override default settings with patch settings, if they exist
     filenames.each do |file_name|
       if File.exist? file_name
         begin
