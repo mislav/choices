@@ -22,7 +22,11 @@ module Choices
     mash.update(load_settings(filenames.shift, env))
     filenames.each do |file_name|
       if File.exist? file_name
-        mash.update(load_settings(file_name, env)) rescue IndexError
+        begin
+          mash.update(load_settings(file_name, env))
+        rescue IndexError => ex
+          puts("#{env} configs does not exist in the patch file; falling back to default configs.")
+        end
       else
         puts("Skipping file #{file_name}, file not found")
       end
